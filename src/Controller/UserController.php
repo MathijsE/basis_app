@@ -91,4 +91,35 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index');
     }
+
+    /**
+     * @Route("/{id}/role", name="role_action", methods="GET|POST")
+     */
+    public function roleAction($id, UserRepository $userRepository): Response
+    {
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $user = $userRepository->find($id);
+            $role = 'ROLE_ADMIN';
+            $roles = $user->getRoles();
+            if ($user) {
+                if (in_array($role, $roles)) {
+                    // $user->removeRole("ROLE_ADMIN");
+                    unset($roles[1]);
+                    $roles = array_values($roles);
+                    $user->setRoles($roles);
+                } else {
+                    //Set the admin role
+                    $roles[] = strtoupper($role);
+                    $user->setRoles($roles);
+                }
+                //Save it to the database
+                $this->getDoctrine()->getManager()->flush();
+            }
+            return $this->render('user/index.html.twig', [
+                'users' => $userRepository->findAll(),
+            ]);
+        } else {
+            return $this->render('noaccess.html.twig');
+        }
+    }
 }
