@@ -25,7 +25,7 @@
             </tr>
             <tr>
                 <th>ImageName</th>
-                <td>{{ product.imageName }}</td>
+                <td><img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.imageName }}" height="150"></td>
             </tr>
             <tr>
                 <th>ImageSize</th>

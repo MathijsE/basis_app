@@ -25,7 +25,7 @@
                 <td>{{ product.code }}</td>
                 <td>{{ product.description }}</td>
                 <td>{{ product.price }}</td>
-                <td>{{ product.imageName }}</td>
+                <td><img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.imageName }}" height="150"></td>
                 <td>{{ product.imageSize }}</td>
                 <td>{{ product.updatedAt ? product.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
